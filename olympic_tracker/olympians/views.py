@@ -24,6 +24,7 @@ def get_olympians(request):
 
 @api_view(['GET'])
 def olympian_stats(request):
+    # breakpoint()
     olympians = Olympian.objects.all()
     male_weight = "SELECT AVG(CAST(weight as int)) FROM public.olympians_olympian WHERE weight ~ '^[0-9]+$' and sex='M';"
     female_weight = "SELECT AVG(CAST(weight as int)) FROM public.olympians_olympian WHERE weight ~ '^[0-9]+$' and sex='F';"
@@ -45,18 +46,18 @@ def olympian_stats(request):
     fetch4 = cursor.fetchone()[0]
 
     average_weights = {"unit": "kg",
-        "male_olympians": fetch1,
-        "female_olympians": fetch2
+        "male_olympians": round(fetch1),
+        "female_olympians": round(fetch2)
     }
 
     stats = {
         "olympian_stats": {
         "total_competing_olympians": fetch3,
         "average_weight": average_weights,
-        "average_age": fetch4
+        "average_age": round(fetch4)
     }
 }
 
-    return Response(stats)
+    return Response([stats])
 
 # Create your views here.
