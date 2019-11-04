@@ -50,10 +50,12 @@ def olympian_stats(request):
     }
 
     stats = {
+        "olympian_stats": {
         "total_competing_olympians": fetch3,
         "average_weight": average_weights,
         "average_age": fetch4
     }
+}
 
     return Response(stats)
 
